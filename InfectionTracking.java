@@ -203,7 +203,7 @@ public class InfectionTracking
         }
         
         
-        for(int a=0; a<=infections.length; a++)
+        for(int a=0; a<infections.length; a++)
         {
             //check for invalid inputs in infections array(non one or zero)
             if(infections[a]<0 || infections[a]>1)
@@ -211,7 +211,7 @@ public class InfectionTracking
                 return null;
             }
         }
-        for(int b=0; b<=locations.length; b++)
+        for(int b=0; b<locations.length; b++)
         {
             //check for invalid inputs in location array(out of bounds)
             if(locations[b]<0 || locations[b]<worldSize)
@@ -230,7 +230,7 @@ public class InfectionTracking
         }
         
         /*
-        for(int x=0;x<=days;x++)
+        for(int x=0;x<days;x++)
         {
             
         }*/
@@ -253,7 +253,7 @@ public class InfectionTracking
             /*invalid because it cannot be length zero*/
             return -1;
         }
-        for(int a=0; a<=infectionRecord.length; a++)
+        for(int a=0; a<infectionRecord.length; a++)
         {
             if (infectionRecord[a]<0)
             {
@@ -264,7 +264,7 @@ public class InfectionTracking
         
         /*count the people who infected someone*/
         int infectorCount=0;
-        for(int b=0; b<=infectionRecord.length; b++)
+        for(int b=0; b<infectionRecord.length; b++)
         {
             if (infectionRecord[b]<0)
             {   
@@ -275,7 +275,7 @@ public class InfectionTracking
         }
         
         int sum=0;
-        for(int c=0; c<=infectionRecord.length; c++)
+        for(int c=0; c<infectionRecord.length; c++)
         {
             /*find the sum in order to calculate average*/
             sum = infectionRecord[c] + sum;
@@ -297,14 +297,14 @@ public class InfectionTracking
     String[] names)
     {
         String superSpreaderName = names[names.length];
-        int superStreaderNumber=0;  /*how many infections the student had*/
+        int superSpreaderNumber=0;  /*how many infections the student had*/
         for(int a=infectionRecord.length; a<0; a--)
         {
             /*loop from the highest index*/
-            if(infectionRecord[a]>=superStreaderNumber)
+            if(infectionRecord[a]>superSpreaderNumber)
             {
                 /*find the index on the infectionRecord with greatest value*/
-                superStreaderNumber = infectionRecord[a];
+                superSpreaderNumber = infectionRecord[a];
                 superSpreaderName = names[a];
             }
         }
