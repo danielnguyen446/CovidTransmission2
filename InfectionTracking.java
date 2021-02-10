@@ -50,15 +50,6 @@ public class InfectionTracking
             return -1;
         }
         
-        for(int a=0; a<=infections.length; a++)
-        {
-            //check for invalid inputs in infections array(non one or zero)
-            if(infections[a]<0 || infections[a]>1)
-            {
-                return -1;
-            }
-        }
-        
         //make scanner and file
         File sourceFile = new File(pathToFile);
         Scanner scnr = new Scanner(new File(pathToFile));
@@ -76,6 +67,15 @@ public class InfectionTracking
             }
             movements[a] = scnr.nextInt();
             infections[a] = scnr.nextInt();
+        }
+        
+        for(int a=0; a<=infections.length; a++)
+        {
+            //check for invalid inputs in infections array(non one or zero)
+            if(infections[a]<0 || infections[a]>1)
+            {
+                return -1;
+            }
         }
         
         return largestLocation+1;
@@ -108,7 +108,8 @@ public class InfectionTracking
         }
         
         for(int i=0; i<=locations.length; i++)
-        {   /*update by adding movement value to location. use modulo to wrap.*/
+        {   
+            /*update by adding movement value to location. use modulo to wrap.*/
             locations[i] = (locations[i]+movements[i])%worldSize;
         }
     }
@@ -157,11 +158,13 @@ public class InfectionTracking
                         if (infections[i] == 1 && infections[j] == 0)
                         {
                             /*check to see if student i infects student j*/
+                            infections[j]=1;
                             numStudentsInfected[i]++;
                         }
                         else if (infections[i] == 0 && infections[j] == 1)
                         {
                             /*check to see if student j infects student i*/
+                            infections[i]=1;
                             numStudentsInfected[j]++;
                         }
                     }
@@ -182,7 +185,6 @@ public class InfectionTracking
      *
      * @returns the array of infections caused by each student
      */
-    /*
     public static int[] countInfectionsByStudent(int days, int worldSize,
     int[] locations, int[] movements, int[] infections)
     {
@@ -227,7 +229,14 @@ public class InfectionTracking
             return null;    //world size can't be negative
         }
         
-    }*/
+        /*
+        for(int x=0;x<=days;x++)
+        {
+            
+        }*/
+        return infections;
+        
+    }
     
     
     /**
@@ -236,8 +245,8 @@ public class InfectionTracking
      * 
      * @return the average as an integer with no decimals.
      */
-	public static int findRNaught(int[] infectionRecord)
-	{
+    public static int findRNaught(int[] infectionRecord)
+    {
         /*invalid cases*/
         if(infectionRecord.length == 0)
         {
@@ -262,7 +271,6 @@ public class InfectionTracking
                 /*if they infected someone, increment the count*/
                 infectorCount++;
             }
-            
         }
         
         int sum=0;
@@ -276,9 +284,9 @@ public class InfectionTracking
         int average = sum / infectorCount;
         
         return average;
-	}
+    }
 	
-	/**
+    /**
      * a method that finds the index of the name of the student who
      * infected others the most.
      * 
@@ -286,7 +294,7 @@ public class InfectionTracking
      */
     public static String findSuperSpreader(int[] infectionRecord,
     String[] names)
-	{
+    {
         String superSpreaderName = names[names.length];
         int superStreaderNumber=0;  /*how many infections the student had*/
         for(int a=infectionRecord.length; a<0; a--)
@@ -300,7 +308,7 @@ public class InfectionTracking
             }
         }
         return superSpreaderName;
-	}
+    }
 	
     public static void main(String[] args) throws IOException
     {
@@ -322,7 +330,7 @@ public class InfectionTracking
         
         System.out.println (populateArrays(pathToFile, names, locations,
         movement, infections));
-	}
+    }
 }
 
 
