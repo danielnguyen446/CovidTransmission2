@@ -104,7 +104,7 @@ public class InfectionTracking
         
         for(int i=0; i<=locations.length; i++)
         {   /*update by adding movement value to location. use modulo to wrap.*/
-            locations[i] = (locations[i]+movements[i])%(worldSize-1);
+            locations[i] = (locations[i]+movements[i])%(worldSize+1);
         }
     }
     
