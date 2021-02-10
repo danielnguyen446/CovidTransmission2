@@ -18,7 +18,7 @@ import java.io.File;
  * This class reads from a file and perform operations on the information
  * on the file.
  */
-public class Main   //InfectionTracking
+public class InfectionTracking
 {
     /*a method to scan in the contents of the file into various parallel arrays
      *@ return an integer value
