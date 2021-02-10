@@ -26,21 +26,43 @@ public class InfectionTracking
     public static int populateArrays(String pathToFile, String[] names,
     int[] locations, int[] movements, int[] infections) throws IOException
     {
-        /*validity checking
-        if() //pathToFile is not valid
+        //validity checking
+        if(pathToFile==null) //pathToFile is not valid
         {
             return -1;
         }
-        if()//any array is null
+        
+        //check for any null input arrays
+        if (names == null)
         {
             return -1;
-        }*/
+        }
+        if (locations == null)
+        {
+            return -1;
+        }
+        if (movements == null)
+        {
+            return -1;
+        }
+        if (infections == null)
+        {
+            return -1;
+        }
         
-        int largestLocation=0;
+        for(int a=0; a<=infections.length; a++)
+        {
+            //check for invalid inputs in infections array(non one or zero)
+            if(infections[a]<0 || infections[a]>1)
+            {
+                return -1;
+            }
+        }
         
+        //make scanner and file
         File sourceFile = new File(pathToFile);
         Scanner scnr = new Scanner(new File(pathToFile));
-        
+        int largestLocation=0;
         for(int a=0; scnr.hasNextLine()==true; a++)
         {
             names[a] = scnr.next();
@@ -71,6 +93,14 @@ public class InfectionTracking
         {
             return;  //world size can't be negative
         }
+        for(int b=0; b<=locations.length; b++)
+        {
+            //check for invalid inputs in location array(out of bounds)
+            if(locations[b]<0 || locations[b]<worldSize)
+            {
+                return;
+            }
+        }
         
         for(int i=0; i<=locations.length; i++)
         {   /*update by adding movement value to location. use modulo to wrap.*/
@@ -92,6 +122,14 @@ public class InfectionTracking
         {
             return null;  //world size can't be negative
         }
+        for(int b=0; b<=locations.length; b++)
+        {
+            //check for invalid inputs in location array(out of bounds)
+            if(locations[b]<0 || locations[b]<worldSize)
+            {
+                return null;
+            }
+        }
         
         boolean valid = true;
         for(int a=0; a<=locations.length;a++)
@@ -108,7 +146,8 @@ public class InfectionTracking
             for(int i=0; i<=locations.length;i++)
             {
                 for(int j=0; j<=locations.length; j++)
-                {   /*check to see if any location is equal to another.*/
+                {   
+		    /*check to see if any location is equal to another.*/
                     if (locations[i] == locations[j])
                     {
                         if (infections[i] == 1 && infections[j] == 0)
@@ -134,11 +173,55 @@ public class InfectionTracking
     }
     
     /*
-     * a method to count the infections caused by each student,
+     * a method to count the infections caused by each student and
+     * update locations and infections according to the simulation
      *
+     * @returns the array of infections caused by each student
+     */
+    /*
     public static int[] countInfectionsByStudent(int days, int worldSize,
     int[] locations, int[] movements, int[] infections)
     {
+        //check for any null input arrays
+        if (locations == null)
+        {
+            return null;
+        }
+        if (movements == null)
+        {
+            return null;
+        }
+        if (infections == null)
+        {
+            return null;
+        }
+        
+        
+        for(int a=0; a<=infections.length; a++)
+        {
+            //check for invalid inputs in infections array(non one or zero)
+            if(infections[a]<0 || infections[a]>1)
+            {
+                return null;
+            }
+        }
+        for(int b=0; b<=locations.length; b++)
+        {
+            //check for invalid inputs in location array(out of bounds)
+            if(locations[b]<0 || locations[b]<worldSize)
+            {
+                return null;
+            }
+        }
+        
+        if (days<0)
+        {
+            return null;    //days can't be negative
+        }
+        if (worldSize<0)
+        {
+            return null;    //world size can't be negative
+        }
         
     }*/
     
@@ -152,11 +235,11 @@ public class InfectionTracking
 	public static int findRNaught(int[] infectionRecord)
 	{
 	    /*invalid cases*/
-        if(infectionRecord.length == 0)
+            if(infectionRecord.length == 0)
 	    {
-            /*invalid because it cannot be length zero*/
-            return -1;
-        }
+            	/*invalid because it cannot be length zero*/
+            	return -1;
+            }
         for(int a=0; a<=infectionRecord.length; a++)
         {
             if (infectionRecord[a]<0)
@@ -202,18 +285,18 @@ public class InfectionTracking
 	{
 	    String superSpreaderName = names[names.length];
 	    int superStreaderNumber=0;  /*how many infections the student had*/
-        for(int a=infectionRecord.length; a<0; a--)
-        {
-            /*loop from the highest index*/
-            if(infectionRecord[a]>=superStreaderNumber)
+	    for(int a=infectionRecord.length; a<0; a--)
             {
-                /*find the index on the infectionRecord with greatest value*/
-                superStreaderNumber = infectionRecord[a];
-                superSpreaderName = names[a];
-            }
+            	/*loop from the highest index*/
+            	if(infectionRecord[a]>=superStreaderNumber)
+            	{
+                    /*find the index on the infectionRecord with greatest value*/
+                    superStreaderNumber = infectionRecord[a];
+                    superSpreaderName = names[a];
+                }
         }
         return superSpreaderName;
-	}
+    }
 	
     public static void main(String[] args) throws IOException
     {
@@ -235,7 +318,7 @@ public class InfectionTracking
         
         System.out.println (populateArrays(pathToFile, names, locations,
         movement, infections));
-	}
+    }
 }
 
 
