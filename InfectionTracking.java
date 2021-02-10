@@ -128,17 +128,17 @@ public class InfectionTracking
         {
             return null;  //world size can't be negative
         }
-        for(int b=0; b<=locations.length; b++)
+        for(int b=0; b<locations.length; b++)
         {
             //check for invalid inputs in location array(out of bounds)
-            if(locations[b]<0 || locations[b]<worldSize)
+            if(locations[b]<0 || locations[b]>worldSize)
             {
                 return null;
             }
         }
         
         boolean valid = true;
-        for(int a=0; a<=locations.length;a++)
+        for(int a=0; a<locations.length;a++)
         {   /*make sure locations are valid, or within world size range.*/
             if(locations[a]>worldSize)
             {
@@ -149,9 +149,9 @@ public class InfectionTracking
         if(valid = true)
         {
             int [] numStudentsInfected = new int[locations.length];
-            for(int i=0; i<=locations.length;i++)
+            for(int i=0; i<locations.length;i++)
             {
-                for(int j=0; j<=locations.length; j++)
+                for(int j=0; j<locations.length; j++)
                 {   /*check to see if any location is equal to another.*/
                     if (locations[i] == locations[j])
                     {
