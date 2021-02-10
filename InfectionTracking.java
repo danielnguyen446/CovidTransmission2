@@ -18,7 +18,7 @@ import java.io.File;
  * This class reads from a file and perform operations on the information
  * on the file.
  */
-public class InfectionTracking
+public class Main   //InfectionTracking
 {
     /*a method to scan in the contents of the file into various parallel arrays
      *@ return an integer value
@@ -67,6 +67,11 @@ public class InfectionTracking
     public static void updateLocations(int worldSize, int[] locations, 
     int[] movements)
     {
+        if(worldSize<0)
+        {
+            return;  //world size can't be negative
+        }
+        
         for(int i=0; i<=locations.length; i++)
         {   /*update by adding movement value to location. use modulo to wrap.*/
             locations[i] = (locations[i]+movements[i])%worldSize;
@@ -82,6 +87,12 @@ public class InfectionTracking
     public static int[] updateInfections(int worldSize, int[] locations, 
     int[] infections)
     {
+        /*validity check*/
+        if(worldSize<0)
+        {
+            return null;  //world size can't be negative
+        }
+        
         boolean valid = true;
         for(int a=0; a<=locations.length;a++)
         {   /*make sure locations are valid, or within world size range.*/
@@ -103,13 +114,11 @@ public class InfectionTracking
                         if (infections[i] == 1 && infections[j] == 0)
                         {
                             /*check to see if student i infects student j*/
-                            infections[j] = 1;
                             numStudentsInfected[i]++;
                         }
                         else if (infections[i] == 0 && infections[j] == 1)
                         {
                             /*check to see if student j infects student i*/
-                            infections[i] = 1;
                             numStudentsInfected[j]++;
                         }
                     }
@@ -124,10 +133,9 @@ public class InfectionTracking
         }
     }
     
-    /**
-     * a method to count the infections caused by each student,
-     */
     /*
+     * a method to count the infections caused by each student,
+     *
     public static int[] countInfectionsByStudent(int days, int worldSize,
     int[] locations, int[] movements, int[] infections)
     {
@@ -145,7 +153,7 @@ public class InfectionTracking
 	{
 	    /*invalid cases*/
         if(infectionRecord.length == 0)
-	{
+	    {
             /*invalid because it cannot be length zero*/
             return -1;
         }
@@ -205,7 +213,7 @@ public class InfectionTracking
             }
         }
         return superSpreaderName;
-    }
+	}
 	
     public static void main(String[] args) throws IOException
     {
@@ -229,4 +237,6 @@ public class InfectionTracking
         movement, infections));
 	}
 }
+
+
 
