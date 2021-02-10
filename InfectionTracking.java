@@ -15,7 +15,7 @@ import java.io.File;
  * This class will 
  */
 
-public class InfectionTracking
+public class Main   //InfectionTracking
 {
     
     public static int populateArrays(String pathToFile, String[] names, int[] locations, int[] movements, int[] infections) throws IOException
@@ -49,7 +49,7 @@ public class InfectionTracking
     
     public static void updateLocations(int worldSize, int[] locations, int[] movements)
     {
-        for(int i=0; i<=locations.length(); i++)
+        for(int i=0; i<=locations.length; i++)
         {   /*update by adding movement value to location. use modulo to wrap.*/
             locations[i] = (locations[i]+movements[i])%worldSize;
         }
@@ -58,7 +58,7 @@ public class InfectionTracking
     public static int[] updateInfections(int worldSize, int[] locations, int[] infections)
     {
         boolean valid = true;
-        for(int a=0; a<=locations.length();a++)
+        for(int a=0; a<=locations.length;a++)
         {   /*make sure locations are valid, or within world size range.*/
             if(locations[a]>worldSize)
             {
@@ -68,10 +68,10 @@ public class InfectionTracking
         
         if(valid = true)
         {
-            int [] numStudentsInfected = new array[locations.length()];
-            for(int i=0; i<=locations.length();i++)
+            int [] numStudentsInfected = new int[locations.length];
+            for(int i=0; i<=locations.length;i++)
             {
-                for(int j=0; j<=locations.length(); j++)
+                for(int j=0; j<=locations.length; j++)
                 {   /*check to see if any location is equal to another.*/
                     if (locations[i] == locations[j])
                     {
@@ -106,13 +106,13 @@ public class InfectionTracking
     }*/
     
 
-	public static void main(String[] args) 
-	{
-	    int worldsize=0;
-	    
-	    int days;
-	    int numberOfStudents;
-	    String pathToFile;
+    public static void main(String[] args) 
+    {
+        int worldsize=0;
+        
+        int days;
+        int numberOfStudents;
+        String pathToFile;
         
         Scanner s = new Scanner(System.in);
         pathToFile = s.next();
@@ -128,3 +128,4 @@ public class InfectionTracking
         System.out.println (populateArrays(pathToFile, names, locations, movement, infections));
 	}
 }
+
