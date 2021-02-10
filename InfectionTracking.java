@@ -2,9 +2,12 @@
  * Name: Daniel Nguyen
  * ID: A16129027
  * Email: d7nguyen@ucsd.edu
- * Sources used: tutor help(Manshi Yang), javadoc https://docs.oracle.com/javase/7/docs/api/java/util/Scanner.html
+ * Sources used: tutor help(Manshi Yang, Ashley Kou), 
+ * javadoc https://docs.oracle.com/javase/7/docs/api/java/util/Scanner.html
  * 
- * This file contains a program to 
+ * This file contains a program using one-dimensional arrays to model how covid 
+ * can spread from student to student when given a file containing names, 
+ * locations, movement patterns, and infection statuses.
  */
  
 import java.io.IOException;
@@ -12,42 +15,57 @@ import java.util.Scanner;
 import java.io.File;
 
 /**
- * This class will 
+ * This class reads from a file and perform operations on the information
+ * on the file.
  */
-
 public class Main   //InfectionTracking
 {
-    
-    public static int populateArrays(String pathToFile, String[] names, int[] locations, int[] movements, int[] infections) throws IOException
+    /*a method to scan in the contents of the file into various parallel arrays
+     *@ return an integer value
+     */
+    public static int populateArrays(String pathToFile, String[] names,
+    int[] locations, int[] movements, int[] infections) throws IOException
     {
-        //validity
+        /*validity checking
+        if() //pathToFile is not valid
+        {
+            return -1;
+        }
+        if()//any array is null
+        {
+            return -1;
+        }*/
         
         int largestLocation=0;
         
         File sourceFile = new File(pathToFile);
         Scanner scnr = new Scanner(new File(pathToFile));
         
-        
-        int line=0;
-        while(scnr.hasNextLine())
+        for(int a=0; scnr.hasNextLine()==true; a++)
         {
-            names[line] = scnr.next();
-            locations[line] = scnr.nextInt();
-            if (locations[line]>=largestLocation)
+            names[a] = scnr.next();
+            locations[a] = scnr.nextInt();
+            if (locations[a]>=largestLocation)
             {
-                /*if this location larger than any scanned before it, set largestLocation equal to that integer*/
-                largestLocation = locations[line];
+                /**if this location larger than any scanned before it, 
+                 *set largestLocation equal to that integer
+                 */
+                largestLocation = locations[a];
             }
-            movements[line] = scnr.nextInt();
-            infections[line] = scnr.nextInt();
-            line++;
+            movements[a] = scnr.nextInt();
+            infections[a] = scnr.nextInt();
         }
         
         return largestLocation+1;
     }
     
-    
-    public static void updateLocations(int worldSize, int[] locations, int[] movements)
+    /**
+     * a method to update the locations of each student depending on their 
+     * movement patterns
+     * 
+     */
+    public static void updateLocations(int worldSize, int[] locations, 
+    int[] movements)
     {
         for(int i=0; i<=locations.length; i++)
         {   /*update by adding movement value to location. use modulo to wrap.*/
@@ -55,7 +73,14 @@ public class Main   //InfectionTracking
         }
     }
     
-    public static int[] updateInfections(int worldSize, int[] locations, int[] infections)
+    /**
+     * a method to track the spread of infection to each student depending on 
+     * current location
+     * 
+     * @return an array for the number of students infected by each person
+     */
+    public static int[] updateInfections(int worldSize, int[] locations, 
+    int[] infections)
     {
         boolean valid = true;
         for(int a=0; a<=locations.length;a++)
@@ -99,15 +124,90 @@ public class Main   //InfectionTracking
         }
     }
     
+    /**
+     * a method to count the infections caused by each student,
+     */
     /*
-    public static int[] countInfectionsByStudent(int days, int worldSize, int[] locations, int[] movements, int[] infections)
+    public static int[] countInfectionsByStudent(int days, int worldSize,
+    int[] locations, int[] movements, int[] infections)
     {
         
     }*/
     
+    
+    /**
+     * a method to find the average number of students who will be infected 
+     * by one student
+     * 
+     * @return the average as an integer with no decimals.
+     */
+	public static int findRNaught(int[] infectionRecord)
+	{
+	    /*invalid cases*/
+        if(infectionRecord.length == 0)
+	{
+            /*invalid because it cannot be length zero*/
+            return -1;
+        }
+        for(int a=0; a<=infectionRecord.length; a++)
+        {
+            if (infectionRecord[a]<0)
+            {
+                /*cannot be negative*/
+                return -1;
+            }
+        }
+	    
+        /*count the people who infected someone*/
+        int infectorCount=0;
+        for(int b=0; b<=infectionRecord.length; b++)
+        {
+            if (infectionRecord[b]<0)
+            {   
+                /*if they infected someone, increment the count*/
+                infectorCount++;
+            }
+            
+        }
+        
+        int sum=0;
+        for(int c=0; c<=infectionRecord.length; c++)
+        {
+            /*find the sum in order to calculate average*/
+            sum = infectionRecord[c] + sum;
+        }
+        
+        /*calculate average*/
+        int average = sum / infectorCount;
+        
+        return average;
+	}
 	
-/*	
-    public static void main(String[] args) 
+	/**
+	 * a method that finds the index of the name of the student who
+	 * infected others the most.
+	 * 
+	 * @returns the name of the student
+	 */
+	public static String findSuperSpreader(int[] infectionRecord,
+	String[] names)
+	{
+	    String superSpreaderName = names[names.length];
+	    int superStreaderNumber=0;  /*how many infections the student had*/
+        for(int a=infectionRecord.length; a<0; a--)
+        {
+            /*loop from the highest index*/
+            if(infectionRecord[a]>=superStreaderNumber)
+            {
+                /*find the index on the infectionRecord with greatest value*/
+                superStreaderNumber = infectionRecord[a];
+                superSpreaderName = names[a];
+            }
+        }
+        return superSpreaderName;
+    }
+	
+    public static void main(String[] args) throws IOException
     {
         int worldsize=0;
         
@@ -120,13 +220,13 @@ public class Main   //InfectionTracking
         days = s.nextInt();
         numberOfStudents = s.nextInt();
         
-        
         String [] names = new String[numberOfStudents];
         int [] locations = new int[numberOfStudents];
         int [] movement = new int[numberOfStudents];
         int [] infections = new int[numberOfStudents];
         
-        System.out.println (populateArrays(pathToFile, names, locations, movement, infections));
-	}*/
+        System.out.println (populateArrays(pathToFile, names, locations,
+        movement, infections));
+	}
 }
 
