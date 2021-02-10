@@ -105,7 +105,8 @@ public class Main   //InfectionTracking
         
     }*/
     
-
+	
+/*	
     public static void main(String[] args) 
     {
         int worldsize=0;
@@ -126,6 +127,6 @@ public class Main   //InfectionTracking
         int [] infections = new int[numberOfStudents];
         
         System.out.println (populateArrays(pathToFile, names, locations, movement, infections));
-	}
+	}*/
 }
 
