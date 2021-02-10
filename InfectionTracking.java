@@ -93,10 +93,10 @@ public class InfectionTracking
         {
             return;  //world size can't be negative
         }
-        for(int b=0; b<=locations.length; b++)
+        for(int b=0; b<locations.length; b++)
         {
             //check for invalid inputs in location array(out of bounds)
-            if(locations[b]<0 || locations[b]<worldSize)
+            if(locations[b]<0 || locations[b]>worldSize)
             {
                 return;
             }
@@ -107,7 +107,7 @@ public class InfectionTracking
             return; //if the world size is one, locations do not change at all.
         }
         
-        for(int i=0; i<=locations.length; i++)
+        for(int i=0; i<locations.length; i++)
         {   
             /*update by adding movement value to location. use modulo to wrap.*/
             locations[i] = (locations[i]+movements[i])%worldSize;
@@ -271,6 +271,7 @@ public class InfectionTracking
                 /*if they infected someone, increment the count*/
                 infectorCount++;
             }
+            
         }
         
         int sum=0;
@@ -286,7 +287,7 @@ public class InfectionTracking
         return average;
     }
 	
-    /**
+	/**
      * a method that finds the index of the name of the student who
      * infected others the most.
      * 
@@ -332,7 +333,3 @@ public class InfectionTracking
         movement, infections));
     }
 }
-
-
-
-
