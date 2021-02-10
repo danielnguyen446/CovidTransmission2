@@ -102,9 +102,14 @@ public class InfectionTracking
             }
         }
         
+        if(worldSize==1)
+        {
+            return; //if the world size is one, locations do not change at all.
+        }
+        
         for(int i=0; i<=locations.length; i++)
         {   /*update by adding movement value to location. use modulo to wrap.*/
-            locations[i] = (locations[i]+movements[i])%(worldSize+1);
+            locations[i] = (locations[i]+movements[i])%worldSize;
         }
     }
     
@@ -146,8 +151,7 @@ public class InfectionTracking
             for(int i=0; i<=locations.length;i++)
             {
                 for(int j=0; j<=locations.length; j++)
-                {   
-		    /*check to see if any location is equal to another.*/
+                {   /*check to see if any location is equal to another.*/
                     if (locations[i] == locations[j])
                     {
                         if (infections[i] == 1 && infections[j] == 0)
@@ -234,12 +238,12 @@ public class InfectionTracking
      */
 	public static int findRNaught(int[] infectionRecord)
 	{
-	    /*invalid cases*/
-            if(infectionRecord.length == 0)
-	    {
-            	/*invalid because it cannot be length zero*/
-            	return -1;
-            }
+        /*invalid cases*/
+        if(infectionRecord.length == 0)
+        {
+            /*invalid because it cannot be length zero*/
+            return -1;
+        }
         for(int a=0; a<=infectionRecord.length; a++)
         {
             if (infectionRecord[a]<0)
@@ -248,7 +252,7 @@ public class InfectionTracking
                 return -1;
             }
         }
-	    
+        
         /*count the people who infected someone*/
         int infectorCount=0;
         for(int b=0; b<=infectionRecord.length; b++)
@@ -275,28 +279,28 @@ public class InfectionTracking
 	}
 	
 	/**
-	 * a method that finds the index of the name of the student who
-	 * infected others the most.
-	 * 
-	 * @returns the name of the student
-	 */
-	public static String findSuperSpreader(int[] infectionRecord,
-	String[] names)
+     * a method that finds the index of the name of the student who
+     * infected others the most.
+     * 
+     * @returns the name of the student
+     */
+    public static String findSuperSpreader(int[] infectionRecord,
+    String[] names)
 	{
-	    String superSpreaderName = names[names.length];
-	    int superStreaderNumber=0;  /*how many infections the student had*/
-	    for(int a=infectionRecord.length; a<0; a--)
+        String superSpreaderName = names[names.length];
+        int superStreaderNumber=0;  /*how many infections the student had*/
+        for(int a=infectionRecord.length; a<0; a--)
+        {
+            /*loop from the highest index*/
+            if(infectionRecord[a]>=superStreaderNumber)
             {
-            	/*loop from the highest index*/
-            	if(infectionRecord[a]>=superStreaderNumber)
-            	{
-                    /*find the index on the infectionRecord with greatest value*/
-                    superStreaderNumber = infectionRecord[a];
-                    superSpreaderName = names[a];
-                }
+                /*find the index on the infectionRecord with greatest value*/
+                superStreaderNumber = infectionRecord[a];
+                superSpreaderName = names[a];
+            }
         }
         return superSpreaderName;
-    }
+	}
 	
     public static void main(String[] args) throws IOException
     {
@@ -318,8 +322,9 @@ public class InfectionTracking
         
         System.out.println (populateArrays(pathToFile, names, locations,
         movement, infections));
-    }
+	}
 }
+
 
 
 
